@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CX Command Center — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --ink-2: #3a3835;
+    --ink-3: #7a7774;
+    --paper: #f5f2ec;
+    --paper-2: #ede9e1;
+    --paper-3: #e3ddd4;
+    --accent: #c94f2a;
+    --accent-2: #2a6bc9;
+    --accent-3: #2a9c6b;
+    --gold: #b8962a;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--paper-3);
+  }
+  .nav-brand { font-family: var(--serif); font-size: 18px; color: var(--ink); text-decoration: none; }
+  .nav-brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { font-size: 13px; color: var(--ink-3); text-decoration: none; letter-spacing: .04em; transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { font-size: 13px; font-weight: 500; color: var(--paper); background: var(--ink); padding: 8px 20px; border-radius: 40px; text-decoration: none; transition: background .2s; }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    padding: 80px 48px 80px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-right: 1px solid var(--paper-3);
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    color: var(--accent); text-transform: uppercase;
+    border: 1px solid var(--accent); border-radius: 40px;
+    padding: 5px 14px; margin-bottom: 32px; width: fit-content;
+  }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; }
+  .hero-h1 {
+    font-family: var(--serif); font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.08; color: var(--ink); margin-bottom: 24px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 17px; color: var(--ink-2); max-width: 480px; line-height: 1.7; margin-bottom: 40px; font-weight: 300; }
+  .hero-meta { display: flex; gap: 32px; }
+  .meta-item { }
+  .meta-label { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; color: var(--ink-3); text-transform: uppercase; }
+  .meta-val { font-size: 14px; font-weight: 500; color: var(--ink); margin-top: 2px; }
+
+  .hero-right {
+    padding: 80px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    background: var(--paper-2);
+  }
+  .hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--paper-3); border: 1px solid var(--paper-3); }
+  .hero-stat {
+    background: var(--paper-2); padding: 32px 28px;
+  }
+  .hero-stat-num { font-family: var(--serif); font-size: 48px; line-height: 1; color: var(--ink); }
+  .hero-stat-num span { font-size: 22px; color: var(--accent); }
+  .hero-stat-label { font-size: 13px; color: var(--ink-3); margin-top: 6px; }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 96px 48px; max-width: 1200px; margin: 0 auto; }
+  section + section { border-top: 1px solid var(--paper-3); }
+
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+    color: var(--ink-3); text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--paper-3); max-width: 80px; }
+  .section-h2 { font-family: var(--serif); font-size: clamp(28px, 3.5vw, 44px); line-height: 1.15; margin-bottom: 24px; }
+  .section-h2 em { font-style: italic; color: var(--accent); }
+  .section-lead { font-size: 17px; color: var(--ink-2); font-weight: 300; max-width: 640px; margin-bottom: 56px; line-height: 1.75; }
+
+  /* ─── CUSTOMER TYPES ─── */
+  .personas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--paper-3); }
+  .persona {
+    padding: 28px 24px; border-right: 1px solid var(--paper-3); border-bottom: 1px solid var(--paper-3);
+    position: relative; overflow: hidden; transition: background .2s;
+  }
+  .persona:hover { background: var(--paper-2); }
+  .persona:nth-child(3n) { border-right: none; }
+  .persona:nth-last-child(-n+3) { border-bottom: none; }
+  .persona-num {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+    margin-bottom: 16px; letter-spacing: .08em;
+  }
+  .persona-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 14px;
+  }
+  .persona-name { font-family: var(--serif); font-size: 20px; margin-bottom: 8px; }
+  .persona-why { font-size: 13px; color: var(--ink-2); line-height: 1.6; margin-bottom: 14px; }
+  .persona-signal {
+    font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+    border-top: 1px solid var(--paper-3); padding-top: 12px; margin-top: auto;
+  }
+  .persona-signal strong { color: var(--ink); }
+  .tag-pill {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px; margin-top: 8px;
+  }
+
+  /* ─── ESCALATION SECTION ─── */
+  .esc-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .esc-rationale { }
+  .esc-rationale p { font-size: 15px; color: var(--ink-2); line-height: 1.75; margin-bottom: 16px; font-weight: 300; }
+  .esc-chart { }
+  .esc-tier {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 0; border-bottom: 1px solid var(--paper-3);
+    position: relative;
+  }
+  .esc-tier:last-child { border-bottom: none; }
+  .tier-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 13px; font-weight: 500;
+    flex-shrink: 0;
+  }
+  .tier-body { }
+  .tier-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .tier-desc { font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+  .tier-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+  .tier-chip {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .06em;
+    padding: 3px 8px; border-radius: 4px; color: var(--ink-3);
+    border: 1px solid var(--paper-3); background: var(--paper-2);
+  }
+  .esc-connector {
+    width: 1px; height: 20px; background: var(--paper-3);
+    margin: 0 0 0 17px;
+  }
+
+  /* ─── COMPENSATION ─── */
+  .comp-intro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-bottom: 56px; }
+  .comp-principle { padding: 32px; border: 1px solid var(--paper-3); position: relative; }
+  .comp-principle::before {
+    content: attr(data-num); font-family: var(--serif); font-size: 80px;
+    color: var(--paper-3); position: absolute; top: 16px; right: 20px;
+    line-height: 1;
+  }
+  .comp-principle h4 { font-family: var(--serif); font-size: 20px; margin-bottom: 10px; }
+  .comp-principle p { font-size: 14px; color: var(--ink-2); line-height: 1.7; font-weight: 300; }
+
+  .comp-matrix { border: 1px solid var(--paper-3); overflow: hidden; }
+  .matrix-header {
+    display: grid; grid-template-columns: 2fr 1.5fr 2fr 1fr;
+    background: var(--ink); color: var(--paper); padding: 14px 20px;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .matrix-row {
+    display: grid; grid-template-columns: 2fr 1.5fr 2fr 1fr;
+    padding: 16px 20px; border-bottom: 1px solid var(--paper-3); align-items: center;
+    transition: background .15s;
+  }
+  .matrix-row:last-child { border-bottom: none; }
+  .matrix-row:hover { background: var(--paper-2); }
+  .matrix-row .scenario { font-size: 14px; font-weight: 500; }
+  .matrix-row .severity { font-family: var(--mono); font-size: 11px; }
+  .matrix-row .method { font-size: 13px; color: var(--ink-2); }
+  .matrix-row .impact {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; font-weight: 500;
+    padding: 4px 10px; border-radius: 4px;
+  }
+
+  /* ─── METHODOLOGY ─── */
+  .method-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--paper-3); }
+  .method-step { padding: 32px 24px; border-right: 1px solid var(--paper-3); }
+  .method-step:last-child { border-right: none; }
+  .step-num { font-family: var(--serif); font-size: 40px; color: var(--paper-3); margin-bottom: 16px; line-height: 1; }
+  .step-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+  .step-desc { font-size: 13px; color: var(--ink-2); line-height: 1.65; font-weight: 300; }
+
+  /* ─── RESULTS ─── */
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--paper-3); }
+  .result-card {
+    padding: 40px 32px; border-right: 1px solid var(--paper-3); text-align: center;
+  }
+  .result-card:last-child { border-right: none; }
+  .result-num { font-family: var(--serif); font-size: 56px; line-height: 1; }
+  .result-num sup { font-size: 24px; vertical-align: super; }
+  .result-label { font-size: 14px; color: var(--ink-2); margin-top: 8px; }
+  .result-note { font-family: var(--mono); font-size: 11px; color: var(--ink-3); margin-top: 4px; }
+
+  /* ─── PULLQUOTE ─── */
+  .pullquote {
+    padding: 64px 48px; background: var(--ink); color: var(--paper); text-align: center;
+  }
+  .pullquote blockquote {
+    font-family: var(--serif); font-size: clamp(22px, 3vw, 36px);
+    font-style: italic; line-height: 1.35; max-width: 800px; margin: 0 auto 24px;
+  }
+  .pullquote cite {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
+    color: rgba(245,242,236,0.5); text-transform: uppercase; font-style: normal;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 48px; border-top: 1px solid var(--paper-3);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-brand { font-family: var(--serif); font-size: 16px; }
+  .footer-brand span { color: var(--accent); }
+  .footer-note { font-family: var(--mono); font-size: 11px; color: var(--ink-3); letter-spacing: .06em; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-left > * { animation: fadeUp .7s ease both; }
+  .hero-left > *:nth-child(1) { animation-delay: .1s; }
+  .hero-left > *:nth-child(2) { animation-delay: .2s; }
+  .hero-left > *:nth-child(3) { animation-delay: .3s; }
+  .hero-left > *:nth-child(4) { animation-delay: .4s; }
+  .hero-stat { animation: fadeUp .7s ease both; }
+  .hero-stat:nth-child(1) { animation-delay: .35s; }
+  .hero-stat:nth-child(2) { animation-delay: .45s; }
+  .hero-stat:nth-child(3) { animation-delay: .55s; }
+  .hero-stat:nth-child(4) { animation-delay: .65s; }
+
+  /* accent line decoration */
+  .accent-line {
+    width: 48px; height: 3px; background: var(--accent); margin-bottom: 32px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">CX<span>Command</span></a>
+  <div class="nav-links">
+    <a href="#personas">Customer types</a>
+    <a href="#escalation">Escalation</a>
+    <a href="#compensation">Compensation</a>
+    <a href="#results">Results</a>
+  </div>
+  <a href="#" class="nav-cta">View dashboard →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Case study · Portfolio project</div>
+    <h1 class="hero-h1">Building a <em>customer service</em> system that actually works</h1>
+    <p class="hero-desc">A methodology-first approach to coordinating CX teams, training agents, and designing compensation logic that keeps customers coming back — not just quiet.</p>
+    <div class="hero-meta">
+      <div class="meta-item"><div class="meta-label">Company</div><div class="meta-val">Novacare (fictional)</div></div>
+      <div class="meta-item"><div class="meta-label">Team size</div><div class="meta-val">12 agents</div></div>
+      <div class="meta-item"><div class="meta-label">Timeframe</div><div class="meta-val">6-month build</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-grid">
+      <div class="hero-stat">
+        <div class="hero-stat-num">94<span>%</span></div>
+        <div class="hero-stat-label">CSAT after framework implementation</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Customer personas mapped and documented</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Escalation tiers with defined SLA targets</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">↓<span>38%</span></div>
+        <div class="hero-stat-label">Reduction in repeat contacts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERSONAS SECTION -->
+<section id="personas">
+  <div class="section-eyebrow">01 — Customer types</div>
+  <h2 class="section-h2">Why six personas, and <em>why these six?</em></h2>
+  <p class="section-lead">Most CX frameworks treat all customers identically. That's the first mistake. Behaviour data from 3,000+ interactions revealed six distinct patterns — each requiring a fundamentally different response strategy, not just a different tone.</p>
+
+  <div class="personas-grid">
+
+    <div class="persona">
+      <div class="persona-num">01 / 06</div>
+      <div class="persona-icon" style="background:#e8f0fb; color:#185FA5;">♥</div>
+      <div class="persona-name">Loyal advocate</div>
+      <p class="persona-why">Identified through repeat purchase rate + NPS score above 8. These customers refer others — losing them silently costs 3–5x their own LTV. Standard service isn't enough; they require relationship-mode interactions.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> High tenure, low complaint frequency, referral activity</div>
+      <span class="tag-pill" style="background:#e8f0fb; color:#185FA5;">Nurture & reward</span>
+    </div>
+
+    <div class="persona">
+      <div class="persona-num">02 / 06</div>
+      <div class="persona-icon" style="background:#fdecea; color:#c0392b;">⚡</div>
+      <div class="persona-name">Frustrated escalator</div>
+      <p class="persona-why">Characterised by high-emotion language, repeat contacts on the same issue, and rapidly escalating requests. Without a defined de-escalation protocol, agents default to apology loops — which makes this customer type significantly worse.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> 3+ contacts on same issue, raised tone, demand for manager</div>
+      <span class="tag-pill" style="background:#fdecea; color:#c0392b;">De-escalate fast</span>
+    </div>
+
+    <div class="persona">
+      <div class="persona-num">03 / 06</div>
+      <div class="persona-icon" style="background:#eaf6f1; color:#2a9c6b;">🏷</div>
+      <div class="persona-name">Deal seeker</div>
+      <p class="persona-why">Arrives at support often with pre-framed complaints designed to trigger compensation. Identified through discount request frequency and complaint-resolution patterns. Not malicious — but requires a firm-and-fair framework to avoid training them to complain for rewards.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> Complaint language mirrors offer terms, frequent coupon requests</div>
+      <span class="tag-pill" style="background:#eaf6f1; color:#2a9c6b;">Value-focused comms</span>
+    </div>
+
+    <div class="persona">
+      <div class="persona-num">04 / 06</div>
+      <div class="persona-icon" style="background:#fef8ec; color:#b8962a;">★</div>
+      <div class="persona-name">First-timer</div>
+      <p class="persona-why">New customers contacting support within their first 30 days. Statistically, a poor first support experience has a 60% churn correlation. The methodology here is onboarding-first — resolve the issue AND reduce future friction through education.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> Account age &lt;30 days, first or second contact ever</div>
+      <span class="tag-pill" style="background:#fef8ec; color:#b8962a;">Onboard & educate</span>
+    </div>
+
+    <div class="persona">
+      <div class="persona-num">05 / 06</div>
+      <div class="persona-icon" style="background:#f0eefe; color:#534AB7;">⚠</div>
+      <div class="persona-name">At-risk churner</div>
+      <p class="persona-why">Predictive signals: declining login frequency, cancelled subscription attempts, or mentions of competitor names. This persona requires proactive outreach, not reactive resolution. Waiting for them to contact you is too late.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> Usage drop &gt;40%, subscription pause attempt, low recency</div>
+      <span class="tag-pill" style="background:#f0eefe; color:#534AB7;">Retention priority</span>
+    </div>
+
+    <div class="persona">
+      <div class="persona-num">06 / 06</div>
+      <div class="persona-icon" style="background:#e2f5ef; color:#0F6E56;">◌</div>
+      <div class="persona-name">Silent dissatisfied</div>
+      <p class="persona-why">The most dangerous type. They don't complain — they simply leave. Identified through CSAT non-response, low engagement post-issue, and zero support contact following known service failures. Proactive outreach is the only intervention that works.</p>
+      <div class="persona-signal"><strong>Key signal:</strong> No CSAT response, no contact after known incident, low recency</div>
+      <span class="tag-pill" style="background:#e2f5ef; color:#0F6E56;">Proactive outreach</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ESCALATION SECTION -->
+<section id="escalation">
+  <div class="section-eyebrow">02 — Escalation framework</div>
+  <h2 class="section-h2">How the four tiers <em>were decided</em></h2>
+  <p class="section-lead">The tier count itself was a design decision. Too few tiers create bottlenecks at the top; too many create confusion about where a ticket belongs. Four was the right number for a 12-person team.</p>
+
+  <div class="esc-layout">
+
+    <div class="esc-rationale">
+      <p>The escalation architecture was built around two constraints: <strong>response time expectations</strong> and <strong>decision authority</strong>. Every tier has both — agents shouldn't be resolving issues they're not empowered to decide on, and managers shouldn't be handling issues a trained agent can close in minutes.</p>
+
+      <p>The SLA targets at each tier weren't guesses. They were reverse-engineered from customer expectation data: what response time, at what tier, causes a customer to escalate their complaint publicly (social media, review platforms) or abandon entirely.</p>
+
+      <p>Tier 3 exists specifically for <strong>policy exceptions</strong> — situations where the right answer for the customer falls outside the standard rulebook. Without a designated tier for this, agents either over-compensate (costly) or under-compensate (churn risk). Team leads at Tier 3 hold the authority to make judgment calls.</p>
+
+      <p>Tier 4 was scoped narrowly on purpose: legal risk, PR exposure, and executive accounts. Elevating more than 2–3% of contacts to this level signals a systemic problem upstream, so it also functions as a diagnostic metric.</p>
+    </div>
+
+    <div class="esc-chart">
+
+      <div class="esc-tier">
+        <div class="tier-num" style="background:#e8f0fb; color:#185FA5;">1</div>
+        <div class="tier-body">
+          <div class="tier-name">Front-line agent</div>
+          <div class="tier-desc">Standard queries, order status, product questions, basic account issues</div>
+          <div class="tier-meta">
+            <span class="tier-chip">SLA: 15 min</span>
+            <span class="tier-chip">Chat + Email</span>
+            <span class="tier-chip">~78% of volume</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-tier">
+        <div class="tier-num" style="background:#f0eefe; color:#534AB7;">2</div>
+        <div class="tier-body">
+          <div class="tier-name">Senior agent</div>
+          <div class="tier-desc">Complex billing disputes, technical escalations, multi-contact issues</div>
+          <div class="tier-meta">
+            <span class="tier-chip">SLA: 2 hr</span>
+            <span class="tier-chip">Any channel</span>
+            <span class="tier-chip">~14% of volume</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-tier">
+        <div class="tier-num" style="background:#fef8ec; color:#b8962a;">3</div>
+        <div class="tier-body">
+          <div class="tier-name">Team lead</div>
+          <div class="tier-desc">Policy exceptions, at-risk accounts, compensation decisions above threshold</div>
+          <div class="tier-meta">
+            <span class="tier-chip">SLA: 4 hr</span>
+            <span class="tier-chip">Phone preferred</span>
+            <span class="tier-chip">~6% of volume</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="esc-tier">
+        <div class="tier-num" style="background:#fdecea; color:#c0392b;">4</div>
+        <div class="tier-body">
+          <div class="tier-name">Manager / Director</div>
+          <div class="tier-desc">Legal exposure, PR risk, executive accounts, systemic failures</div>
+          <div class="tier-meta">
+            <span class="tier-chip">SLA: 24 hr</span>
+            <span class="tier-chip">Direct call</span>
+            <span class="tier-chip">&lt;2% of volume</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- COMPENSATION SECTION -->
+<section id="compensation">
+  <div class="section-eyebrow">03 — Compensation logic</div>
+  <h2 class="section-h2">What drove the <em>compensation decisions</em></h2>
+  <p class="section-lead">Compensation design is where most CX frameworks go wrong. They either over-compensate (training customers to complain) or under-compensate (failing to recover goodwill). The logic here was built on three principles.</p>
+
+  <div class="comp-intro-grid">
+    <div class="comp-principle" data-num="1">
+      <h4>Match the emotional weight</h4>
+      <p>Compensation should match how wrong the customer feels — not just what went wrong. A refund for a defective product is expected. A handwritten apology and a thoughtful upgrade for a loyal customer who waited three weeks for a wrong order — that's memorable. The method changes the feeling.</p>
+    </div>
+    <div class="comp-principle" data-num="2">
+      <h4>Never train bad behaviour</h4>
+      <p>If the same compensation (e.g. 20% discount) is offered for any complaint regardless of severity, customers learn that complaining has a fixed payout. The matrix was designed so that compensation scales with genuine harm — not just persistence or vocal volume.</p>
+    </div>
+    <div class="comp-intro-grid" style="grid-column: 1/-1; grid-template-columns: 1fr 1fr; gap: 24px; display: grid; margin: 0;">
+    <div class="comp-principle" data-num="3" style="margin: 0;">
+      <h4>Strengthen the relationship</h4>
+      <p>For high-value customers, the best compensation deepens loyalty rather than just fixing the transaction. A loyalty tier upgrade costs less than a full refund — but generates more goodwill and retention impact.</p>
+    </div>
+    <div class="comp-principle" data-num="4" style="margin: 0;">
+      <h4>Measure the outcome, not the cost</h4>
+      <p>Every compensation decision is logged against the customer's subsequent retention, NPS change, and repeat purchase rate. Over time, this creates empirical data on which methods actually work — not just which feel most generous in the moment.</p>
+    </div>
+    </div>
+  </div>
+
+  <div class="comp-matrix">
+    <div class="matrix-header">
+      <span>Scenario</span>
+      <span>Severity</span>
+      <span>Recommended method</span>
+      <span>Retention impact</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">Minor delay, first complaint</span>
+      <span class="severity" style="color:#2a9c6b;">Low</span>
+      <span class="method">5–15% discount on next order</span>
+      <span class="impact" style="background:#eaf6f1; color:#2a9c6b;">+12%</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">Billing error, overcharge</span>
+      <span class="severity" style="color:#b8962a;">Medium</span>
+      <span class="method">Full refund + account credit</span>
+      <span class="impact" style="background:#fef8ec; color:#b8962a;">+29%</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">Damaged / wrong product</span>
+      <span class="severity" style="color:#b8962a;">Medium</span>
+      <span class="method">Free replacement + apology note</span>
+      <span class="impact" style="background:#fef8ec; color:#b8962a;">+31%</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">Loyal customer, service failure</span>
+      <span class="severity" style="color:#534AB7;">High</span>
+      <span class="method">Tier upgrade + personal follow-up</span>
+      <span class="impact" style="background:#f0eefe; color:#534AB7;">+47%</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">At-risk churn signal</span>
+      <span class="severity" style="color:#c0392b;">Critical</span>
+      <span class="method">Retention offer + direct manager call</span>
+      <span class="impact" style="background:#fdecea; color:#c0392b;">+58%</span>
+    </div>
+    <div class="matrix-row">
+      <span class="scenario">Major service failure, PR risk</span>
+      <span class="severity" style="color:#c0392b;">Critical</span>
+      <span class="method">Goodwill gift + executive contact</span>
+      <span class="impact" style="background:#fdecea; color:#c0392b;">+62%</span>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section>
+  <div class="section-eyebrow">04 — Process</div>
+  <h2 class="section-h2">How the framework <em>was built</em></h2>
+  <p class="section-lead">The system wasn't designed top-down. It was built from observed patterns — then stress-tested against edge cases before being codified into training and tooling.</p>
+  <div class="method-steps">
+    <div class="method-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Contact audit</div>
+      <p class="step-desc">3,000 historical tickets were tagged by outcome, channel, customer segment, and agent. Patterns in resolution time, repeat contacts, and CSAT correlation were mapped.</p>
+    </div>
+    <div class="method-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Persona clustering</div>
+      <p class="step-desc">Behaviour clusters were identified through frequency, tone, and resolution data. Six archetypal patterns emerged consistently across ticket categories and channels.</p>
+    </div>
+    <div class="method-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Protocol design</div>
+      <p class="step-desc">Each persona received a handling playbook: opening approach, escalation triggers, compensation authority, and follow-up cadence. All tested in simulated role-plays.</p>
+    </div>
+    <div class="method-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Training & rollout</div>
+      <p class="step-desc">Agents completed 6 training modules across 4 weeks. Performance was tracked weekly. Playbooks were updated based on real-world edge cases within the first month.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PULLQUOTE -->
+<div class="pullquote">
+  <blockquote>"The goal was never to resolve tickets faster. It was to make customers feel like the company actually understood them — and then prove it with a response that matched that understanding."</blockquote>
+  <cite>— Design principle, CX Command Center</cite>
+</div>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="section-eyebrow">05 — Outcomes</div>
+  <h2 class="section-h2">What the system <em>achieved</em></h2>
+  <p class="section-lead">Measured over a 90-day post-implementation period, against the same period the prior year.</p>
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="result-num" style="color: var(--accent-2);">94<sup>%</sup></div>
+      <div class="result-label">CSAT score</div>
+      <div class="result-note">Up from 79% pre-framework</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num" style="color: var(--accent-3);">↓38<sup>%</sup></div>
+      <div class="result-label">Repeat contact rate</div>
+      <div class="result-note">FCR improved from 63% → 87%</div>
+    </div>
+    <div class="result-card">
+      <div class="result-num" style="color: var(--gold);">+61</div>
+      <div class="result-label">Net promoter score</div>
+      <div class="result-note">Up from +34 — industry avg is +32</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">CX<span>Command</span> · Portfolio project</div>
+  <div class="footer-note">Built to demonstrate CX system design methodology</div>
+</footer>
+
+</body>
+</html>
