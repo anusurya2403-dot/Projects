@@ -1,7 +1,8 @@
-# Clarify - CX Transformation Project (Visit : https://woozy-teacher-283.notion.site/Clarify-CX-Transformation-Playbook-377779ca445980dfb913fb093120beb3)
+# Clarify - CX Transformation Project 
+# (Visit : https://woozy-teacher-283.notion.site/Clarify-CX-Transformation-Playbook-377779ca445980dfb913fb093120beb3)
 ### A 90-day customer service transformation. Built from scratch.
 
-> **Clarify** is a B2B SaaS company selling customer feedback and survey tooling to mid-market businesses. Despite being in the business of helping other companies understand their customers — Clarify's own customer service operation was severely underperforming. This project documents the full transformation.
+> **Clarify** is a B2B SaaS company selling customer feedback and survey tooling to mid-market businesses. Despite being in the business of helping other companies understand their customers - Clarify's own customer service operation was severely underperforming. This project documents the full transformation.
 
 ---
 
