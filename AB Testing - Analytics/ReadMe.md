@@ -1,5 +1,7 @@
 # A/B Testing — Portfolio Color Theme
 
+## Visit me: https://canva.link/ihj6kjfgeqzzrtb
+
 A self-contained A/B testing simulation built with vanilla JavaScript, designed to demonstrate the full lifecycle of a real-world experiment — from hypothesis to statistical conclusion.
 
 > **Why this project?** Real A/B tests need thousands of visitors and weeks of runtime. This project simulates that entire process in-browser, using statistically valid methods, so the concepts and results are fully explainable and portfolio-ready.
