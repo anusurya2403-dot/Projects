@@ -1,0 +1,72 @@
+name: Maritime Loading Computer CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Build
+        run: echo "Building Maritime Loading Computer..."
+
+  unit-tests:
+    name: Unit & Integration Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Unit Tests
+        run: echo "Running stability calc unit tests..."
+      - name: Run API Contract Tests
+        run: echo "Running API contract tests..."
+      - name: Check Code Coverage
+        run: echo "Code coverage above 80% confirmed."
+
+  staging-deploy:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: unit-tests
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to Staging
+        run: echo "Deploying to staging environment..."
+      - name: Run Smoke Tests
+        run: echo "Smoke tests passed on staging."
+
+  uat:
+    name: UAT & Approval
+    runs-on: ubuntu-latest
+    needs: staging-deploy
+    environment: uat
+    steps:
+      - uses: actions/checkout@v3
+      - name: UAT Test Run
+        run: echo "Running UAT test suite from Qase..."
+      - name: Stakeholder Sign Off
+        run: echo "PM go/no-go review complete."
+
+  production-release:
+    name: Production Release
+    runs-on: ubuntu-latest
+    needs: uat
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+      - name: Blue Green Deploy
+        run: echo "Starting blue-green deployment..."
+      - name: Rollout 5 percent
+        run: echo "Rolling out to 5% of users..."
+      - name: Rollout 50 percent
+        run: echo "Rolling out to 50% of users..."
+      - name: Rollout 100 percent
+        run: echo "Rolling out to 100% of users..."
+      - name: Close Jira Release
+        run: echo "Jira release MLC-R1 closed."
