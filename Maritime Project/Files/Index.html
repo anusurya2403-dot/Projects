@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maritime Loading Computer — PM Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep: #0d1f3c;
+    --ocean: #1a3a5c;
+    --teal: #0e7490;
+    --cyan: #06b6d4;
+    --gold: #f59e0b;
+    --cream: #f8f4ee;
+    --white: #ffffff;
+    --muted: #94a3b8;
+    --notion: #000000;
+    --linear: #5e6ad2;
+    --qase: #4f46e5;
+    --github: #24292f;
+    --hubspot: #ff7a59;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    background: radial-gradient(ellipse at 50% 0%, #1a3a5c 0%, var(--navy) 70%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 800px; height: 800px;
+    border-radius: 50%;
+    border: 1px solid rgba(6,182,212,0.08);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    border: 1px solid rgba(6,182,212,0.12);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s ease-in-out infinite 1s;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+    50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.3);
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 40px;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+    opacity: 0;
+  }
+
+  .hero h1 span { color: var(--cyan); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 24px auto 0;
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+    opacity: 0;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 48px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+    opacity: 0;
+  }
+
+  .meta-item { text-align: center; }
+  .meta-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+  .meta-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* TOOLCHAIN BANNER */
+  .toolchain {
+    background: var(--deep);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 24px;
+  }
+
+  .toolchain-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tool-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .tool-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .tool-badge.notion { background: rgba(0,0,0,0.4); color: #fff; }
+  .tool-badge.linear { background: rgba(94,106,210,0.2); color: #818cf8; border-color: rgba(94,106,210,0.3); }
+  .tool-badge.qase { background: rgba(79,70,229,0.2); color: #a5b4fc; border-color: rgba(79,70,229,0.3); }
+  .tool-badge.github { background: rgba(36,41,47,0.6); color: #e2e8f0; border-color: rgba(255,255,255,0.15); }
+  .tool-badge.hubspot { background: rgba(255,122,89,0.15); color: #fb923c; border-color: rgba(255,122,89,0.3); }
+
+  .tool-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .notion .tool-dot { background: #fff; }
+  .linear .tool-dot { background: #818cf8; }
+  .qase .tool-dot { background: #a5b4fc; }
+  .github .tool-dot { background: #e2e8f0; }
+  .hubspot .tool-dot { background: #fb923c; }
+
+  .chain-arrow {
+    color: var(--muted);
+    font-size: 18px;
+    padding: 0 4px;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .step-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 72px;
+    font-weight: 500;
+    line-height: 1;
+    color: rgba(6,182,212,0.15);
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+
+  .section-title-group {}
+  .tool-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* SCREENSHOT GRID */
+  .screenshot-grid {
+    display: grid;
+    gap: 16px;
+  }
+
+  .screenshot-grid.two { grid-template-columns: 1fr 1fr; }
+  .screenshot-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .screenshot-grid.single { grid-template-columns: 1fr; }
+
+  .screenshot-card {
+    background: var(--deep);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .screenshot-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .screenshot-img {
+    width: 100%;
+    display: block;
+    background: #1e293b;
+    min-height: 200px;
+    object-fit: cover;
+  }
+
+  .screenshot-caption {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .caption-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .caption-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* WHAT I DID BOX */
+  .did-box {
+    background: linear-gradient(135deg, rgba(6,182,212,0.08), rgba(14,116,144,0.05));
+    border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-top: 24px;
+  }
+
+  .did-box h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    margin-bottom: 16px;
+  }
+
+  .did-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .did-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  .did-list li::before {
+    content: '→';
+    color: var(--cyan);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: 0;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 60px auto;
+    max-width: 1100px;
+  }
+
+  .stat-cell {
+    background: var(--deep);
+    padding: 32px 24px;
+    text-align: center;
+  }
+
+  .stat-cell-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .stat-cell-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--deep);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 48px 24px;
+    text-align: center;
+  }
+
+  .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .footer-role {
+    color: var(--cyan);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-chain {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* PLACEHOLDER IMAGE STYLE */
+  .img-placeholder {
+    width: 100%;
+    min-height: 220px;
+    background: linear-gradient(135deg, #0d1f3c, #1a3a5c);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .img-placeholder-icon {
+    font-size: 32px;
+    opacity: 0.4;
+  }
+
+  /* COLOR ACCENTS PER TOOL */
+  .accent-notion { color: #e2e8f0; }
+  .accent-linear { color: #818cf8; }
+  .accent-qase { color: #a5b4fc; }
+  .accent-github { color: #34d399; }
+  .accent-hubspot { color: #fb923c; }
+
+  .border-notion { border-left: 3px solid #e2e8f0; }
+  .border-linear { border-left: 3px solid #818cf8; }
+  .border-qase { border-left: 3px solid #a5b4fc; }
+  .border-github { border-left: 3px solid #34d399; }
+  .border-hubspot { border-left: 3px solid #fb923c; }
+
+  @media (max-width: 768px) {
+    .screenshot-grid.two,
+    .screenshot-grid.three { grid-template-columns: 1fr; }
+    .hero-meta { gap: 24px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .section-header { flex-direction: column; gap: 8px; }
+    .step-number { font-size: 40px; }
+    .toolchain-inner { gap: 6px; }
+    .chain-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">PM Portfolio Case Study · 2024–2025</div>
+  <h1>Maritime<br><span>Loading Computer</span></h1>
+  <p class="hero-sub">A certified shore-side and onboard SaaS platform for vessel stability, cargo load planning, and regulatory compliance.</p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <div class="meta-num">10</div>
+      <div class="meta-label">Features</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">6</div>
+      <div class="meta-label">Epics</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">5</div>
+      <div class="meta-label">User Stories</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-num">5</div>
+      <div class="meta-label">Tools</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLCHAIN BANNER -->
+<div class="toolchain">
+  <div class="toolchain-inner">
+    <div class="tool-badge notion"><span class="tool-dot"></span> Notion</div>
+    <span class="chain-arrow">→</span>
+    <div class="tool-badge linear"><span class="tool-dot"></span> Linear</div>
+    <span class="chain-arrow">→</span>
+    <div class="tool-badge qase"><span class="tool-dot"></span> Qase</div>
+    <span class="chain-arrow">→</span>
+    <div class="tool-badge github"><span class="tool-dot"></span> GitHub Actions</div>
+    <span class="chain-arrow">→</span>
+    <div class="tool-badge hubspot"><span class="tool-dot"></span> HubSpot CRM</div>
+  </div>
+</div>
+
+<!-- STEP 1 — Confluence -->
+<section class="section">
+  <div class="section-header">
+    <div class="step-number">01</div>
+    <div class="section-title-group">
+      <span class="tool-tag accent-notion">Requirements & Documentation</span>
+      <h2 class="section-title">Confluence — Product Wiki</h2>
+      <p class="section-desc">Created a structured product documentation space covering the product vision, full feature list with priorities, and a detailed PRD for the Stability Engine module.</p>
+    </div>
+  </div>
+
+  <div class="screenshot-grid two">
+    <div class="screenshot-card border-notion">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">📓</div>
+        <span>Confluence — Maritime Loading Computer</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Confluence1.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">Main Page — 3 Subpages</div>
+        <div class="caption-desc">Product Vision & OKRs · Feature List · F-02 Stability Engine PRD</div>
+      </div>
+    </div>
+    <div class="screenshot-card border-notion">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">📄</div>
+        <span>Confluence — F-02 Stability Engine PRD</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Confluence2.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">F-02 Stability Engine PRD</div>
+        <div class="caption-desc">FR-01 to FR-03 · NF-01 to NF-03 · Acceptance Criteria · Jira & TestRail Links</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="did-box">
+    <h4>What I did as PM</h4>
+    <ul class="did-list">
+      <li>Created a Confluence workspace with a structured 3-page documentation hierarchy</li>
+      <li>Documented 10 features (F-01 to F-10) with Epic mapping, priority and complexity ratings</li>
+      <li>Wrote a full PRD for F-02 Stability Engine including functional, non-functional requirements and acceptance criteria</li>
+      <li>Linked PRD to Jira epics (EP-01) and TestRail suite (S-02) for full traceability</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STEP 2 — Jira -->
+<section class="section">
+  <div class="section-header">
+    <div class="step-number">02</div>
+    <div class="section-title-group">
+      <span class="tool-tag accent-linear">Sprint & Backlog Management</span>
+      <h2 class="section-title">Jira — Sprint Board</h2>
+      <p class="section-desc">Set up the project in Jira with epics, user stories, and sprint tracking. Managed issue statuses to reflect real sprint progress across the team.</p>
+    </div>
+  </div>
+
+  <div class="screenshot-grid two">
+    <div class="screenshot-card border-linear">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">📋</div>
+        <span>Jira — Issues Board</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Jira1.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">Sprint Issues Board</div>
+        <div class="caption-desc">In Progress: 2 · Todo: 1 · Done: 2 — MLC-12 to MLC-16</div>
+      </div>
+    </div>
+    <div class="screenshot-card border-linear">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">🎫</div>
+        <span>Jira — MLC-15 Detail</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Jira2.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">MLC-15 — Condition Comparison</div>
+        <div class="caption-desc">User story with acceptance criteria · 8 SP · 3 days estimate · Status: Done</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="did-box">
+    <h4>What I did as PM</h4>
+    <ul class="did-list">
+      <li>Created Maritime Loading Computer project in Jira with full description and sprint dates</li>
+      <li>Added 5 user stories (MLC-12 to MLC-16) under Epic EP-01 Hull & Stability</li>
+      <li>Wrote user stories in the correct format — As a [role], I want to [goal], so that [outcome]</li>
+      <li>Set acceptance criteria, story points and estimates for each issue</li>
+      <li>Managed sprint statuses — Todo, In Progress, Done — reflecting real team workflow</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STEP 3 — QASE -->
+<section class="section">
+  <div class="section-header">
+    <div class="step-number">03</div>
+    <div class="section-title-group">
+      <span class="tool-tag accent-qase">Quality Assurance & Testing</span>
+      <h2 class="section-title">Qase — Test Management</h2>
+      <p class="section-desc">Built a complete test management setup with 5 test suites and executed a Sprint 1 test run with real pass and fail outcomes mapped to Jira stories.</p>
+    </div>
+  </div>
+
+  <div class="screenshot-grid two">
+    <div class="screenshot-card border-qase">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">🧪</div>
+        <span>Qase — MLC Repository</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Qase1.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">MLC Repository — 5 Test Suites</div>
+        <div class="caption-desc">S-01 Hull Import · S-02 Stability Engine · S-03 GZ Curve · S-04 Stress Alerts · S-05 Auth</div>
+      </div>
+    </div>
+    <div class="screenshot-card border-qase">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">✅</div>
+        <span>Qase — Test Run Results</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Qase2.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">Sprint 1 Test Run — 100% Executed</div>
+        <div class="caption-desc">C-021 PASSED · C-022 FAILED · Started by Anu Surya · 06 Jun 2026</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="did-box">
+    <h4>What I did as PM</h4>
+    <ul class="did-list">
+      <li>Created MLC project in Qase with 5 test suites covering all Sprint 1 features</li>
+      <li>Wrote 2 test cases in S-02 Stability Engine with descriptions and expected results</li>
+      <li>Executed Sprint 1 Test Run — marked C-021 as Passed and C-022 as Failed</li>
+      <li>Failed test case C-022 (GM below minimum) flagged for Sprint 2 fix — demonstrating real QA feedback loop</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STEP 4 — GITHUB -->
+<section class="section">
+  <div class="section-header">
+    <div class="step-number">04</div>
+    <div class="section-title-group">
+      <span class="tool-tag accent-github">CI/CD & Deployment</span>
+      <h2 class="section-title">GitHub Actions — Pipeline</h2>
+      <p class="section-desc">Set up a 5-stage CI/CD pipeline with 3 environments and published a formal v1.0 release with full release notes documenting features, testing outcomes and deployment details.</p>
+    </div>
+  </div>
+
+  <div class="screenshot-grid two">
+    <div class="screenshot-card border-github">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">⚙️</div>
+        <span>GitHub Actions — CI/CD Pipeline</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Github1.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">CI/CD Pipeline — All Stages Green</div>
+        <div class="caption-desc">Build → Unit Tests → Staging → UAT → Production · Status: Success · 39s</div>
+      </div>
+    </div>
+    <div class="screenshot-card border-github">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">🚀</div>
+        <span>GitHub — v1.0 Release Notes</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Github2.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">v1.0 Sprint 1 Release</div>
+        <div class="caption-desc">5 features released · Blue-green deploy · 3 environments · Release notes published</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="did-box">
+    <h4>What I did as PM</h4>
+    <ul class="did-list">
+      <li>Created GitHub repository for Maritime Loading Computer with public visibility</li>
+      <li>Wrote CI/CD pipeline file with 5 stages — Build, Unit Tests, Staging, UAT and Production Release</li>
+      <li>Set up 3 deployment environments — staging, uat, production — with protection rules</li>
+      <li>Published v1.0 release with formal release notes covering features, testing outcomes and blue-green deployment</li>
+      <li>Demonstrated understanding of PM go/no-go review gate before production deployment</li>
+    </ul>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STEP 5 — HUBSPOT -->
+<section class="section">
+  <div class="section-header">
+    <div class="step-number">05</div>
+    <div class="section-title-group">
+      <span class="tool-tag accent-hubspot">Customer & Sales Management</span>
+      <h2 class="section-title">HubSpot — CRM Pipeline</h2>
+      <p class="section-desc">Managed the commercial side of the product by tracking shipping company deals, contacts and sales pipeline stages — showing full product lifecycle ownership from build to sell.</p>
+    </div>
+  </div>
+
+  <div class="screenshot-grid two">
+    <div class="screenshot-card border-hubspot">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">💼</div>
+        <span>HubSpot — Deals Pipeline</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Hubspot1.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">Sales Pipeline — 3 Active Deals</div>
+        <div class="caption-desc">Maersk $45k → MSC Mediterranean $78k → CMA CGM $120k</div>
+      </div>
+    </div>
+    <div class="screenshot-card border-hubspot">
+      <div class="img-placeholder">
+        <div class="img-placeholder-icon">👤</div>
+        <span>HubSpot — Sophie Dubois Contact</span>
+        <span style="font-size:11px;opacity:0.6"><img src="Hubspot2.jpeg" alt="Error page screenshot" width="600"></span>
+      </div>
+      <div class="screenshot-caption">
+        <div class="caption-title">Sophie Dubois — Fleet Superintendent</div>
+        <div class="caption-desc">CMA CGM Group · Lifecycle: Opportunity · Deal value: $120,000</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="did-box">
+    <h4>What I did as PM</h4>
+    <ul class="did-list">
+      <li>Set up HubSpot CRM with a sales pipeline tracking shipping company customers</li>
+      <li>Created 3 deals — Maersk Line ($45k), MSC Mediterranean ($78k), CMA CGM Group ($120k)</li>
+      <li>Mapped contacts to real maritime roles — Chief Officer, Port Captain, Fleet Superintendent — matching user personas from the PRD</li>
+      <li>Demonstrated commercial awareness by connecting product delivery to customer acquisition pipeline</li>
+    </ul>
+  </div>
+</section>
+
+<!-- STATS ROW -->
+<div class="stats-row" style="margin: 0 24px 80px; max-width: calc(1100px); margin-left: auto; margin-right: auto;">
+  <div class="stat-cell">
+    <div class="stat-cell-num">5</div>
+    <div class="stat-cell-label">Tools in Toolchain</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-cell-num">10</div>
+    <div class="stat-cell-label">Features Documented</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-cell-num">5</div>
+    <div class="stat-cell-label">User Stories in Jira</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-cell-num">v1.0</div>
+    <div class="stat-cell-label">Release Published</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-cell-num">$243k</div>
+    <div class="stat-cell-label">CRM Pipeline Value</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">Anu Surya</div>
+  <div class="footer-role">Product Manager · Business Analyst</div>
+  <div class="footer-chain" style="margin-top:24px;">
+    Confluence &nbsp;→&nbsp; Jira &nbsp;→&nbsp; Qase &nbsp;→&nbsp; GitHub Actions &nbsp;→&nbsp; HubSpot CRM
+  </div>
+  <div style="margin-top:16px; color: var(--muted); font-size:12px; font-family: 'DM Mono', monospace;">
+    Maritime Loading Computer · v1.0 · 2024–2025 · Confidential
+  </div>
+</footer>
+
+</body>
+</html>
