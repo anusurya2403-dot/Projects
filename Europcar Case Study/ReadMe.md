@@ -1,6 +1,6 @@
-# Europcar Privilege Program — Strategic Product Management Case Study
+# Europcar Privilege Program - Strategic Product Management Case Study
 
-> **Role:** Product Manager – Strategic Intelligence based on Customer Experience  
+> **Role:** Product Manager - Strategic Intelligence based on Customer Experience  
 > **Focus Areas:** Strategy · Consumer Behaviour · Competitive Intelligence · A/B Testing · Roadmap
 
 ---
